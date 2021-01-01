@@ -1,0 +1,9 @@
+#AutoInsta
+from instabot import Bot
+
+bot = Bot()
+
+bot.login(username = "usernamehere",password="***********")
+
+# Note - Only JPEG and JFIF formats images
+bot.upload_photo("image_path","Caption")
