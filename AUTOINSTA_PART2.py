@@ -1,0 +1,42 @@
+# Autoinsta Part 2
+from instabot import Bot
+import os
+import random
+from PIL import Image
+import smtplib
+
+cwd = os.getcwd()
+
+bot = Bot()
+
+bot.login(username="username", password="************")
+files_name = os.listdir(f"{cwd}/photos")
+
+
+def send_email():
+    email = "youremail@host.com"
+    password = "*************"
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login(email, password)
+    s.sendmail(email, email, f"Available Photos in Storage {len(files_name)}")
+    s.quit()
+
+
+file = random.choice(files_name)
+split_file_name = str(file).split(".")
+ext = str(split_file_name[1])
+print(ext)
+if ext == 'png':
+    img = Image.open(f"{cwd}/photos/{file}")
+    jpeg_img = img.convert('RGB')
+    jpeg_img.save(f"{cwd}/photos/converted.jpeg")
+    bot.upload_photo(f"{cwd}/photos/converted.jpeg", "caption")
+    os.remove(f"{cwd}/photos/{file}.REMOVE_ME")
+    os.remove(f"{cwd}/photos/converted.jpeg.REMOVE_ME")
+else:
+    bot.upload_photo(f"{cwd}/photos/{file}", "caption")
+    os.remove(f"{cwd}/photos/{file}.REMOVE_ME")
+
+if len(files_name) <= 10:
+    send_email()
