@@ -1,0 +1,18 @@
+****************POWESHELL COMMANDS*******************
+pip install virtualenv
+virtualenv myenv
+.\myenv\Scripts\activate
+pip install instabot
+pip install pillow
+pip freeze > requirements.txt
+
+
+
+*****************GIT BASH COMMANDS********************
+heroku login
+git init
+git add .
+heroku create enterprojectname
+heroku git: reomote -a enterprojectname
+git commit -am"ANY MESSAGE'
+git push heroku master
